@@ -1,0 +1,69 @@
+<div class="sidebar-panel" id="sidebar">
+  <div class="logo text-uppercase">
+    <!--
+      <img src="meritum2/assets/img/tcesp.png" class="logo-img" alt="logo" /> TCESP
+    -->
+    Meritum
+    <div class="version">1.0</div>
+  </div>
+  <div class="divider"></div>
+  <div class="sidebar-wrapper">
+    <div class="nav-container">
+      <ul class="nav">
+        <li
+          *ngFor="let menuItem of menuItems"
+          routerLinkActive
+          #rla="routerLinkActive"
+          [ngClass]="
+            rla.isActive ? (menuItem.children === null ? 'active' : '') : ''
+          "
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a
+            [style.display]="menuItem.children === null ? 'flex' : 'none'"
+            [routerLink]="[menuItem.path]"
+            [style.background-color]="rla.isActive ? color : 'transparent'"
+            [style.color]="rla.isActive ? activeFontColor : normalFontColor"
+          >
+            <i class="material-icons">{{ menuItem.icon }}</i>
+            <span>{{ menuItem.title }}</span>
+          </a>
+          <div [hidden]="menuItem.children === null" class="collapse-container">
+            <a
+              data-toggle="collapse"
+              [href]="[menuItem.path]"
+              style="padding: 0 15px;"
+              [ngClass]="rla.isActive ? 'parent-active' : ''"
+              class="collapse-a collapsed"
+              [style.color]="normalFontColor"
+            >
+              <i class="material-icons">{{ menuItem.icon }}</i>
+              <span>{{ menuItem.title }}</span>
+              <b class="caret" [style.color]="normalFontColor"></b>
+            </a>
+            <div id="component" class="collapse" [id]="[menuItem.id]">
+              <ul class="nav">
+                <ng-container *ngFor="let subItem of menuItem.children">
+                  <li routerLinkActive #subrla="routerLinkActive">
+                    <a
+                      [routerLink]="[subItem.path]"
+                      [style.background-color]="
+                        subrla.isActive ? '#0092bf' : 'transparent'
+                      "
+                      style="height: 43px;"
+                    >
+                      <span style="margin-left: 5px; width: 21px;">{{
+                        subItem.icon
+                      }}</span>
+                      <span>{{ subItem.title }}</span>
+                    </a>
+                  </li>
+                </ng-container>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
